@@ -1,3 +1,15 @@
+Using image classification, my sports-ball recognition program informs the user the type of sports ball displayed. 
+I created my project on the Jetson nano, using a retrained resnet18 model, containing my dataset of sports balls. To run teh recognition code, it uses imagenet.py on the inputted image. 
+1. Our first step to get started is to have your Jetson Nano plugged in with the SD card inside.
+2. The next step is to find a dataset, mine is a sports ball dataset.
+3. Then, if your dataset doesn't come with a test, train, and val folder, you will need to create one.(I needed to)
+4. Next, you need create a labels.txt document inside jetson-inference/python/training/classification/data/sports-ball, inside all it will have is the names of what you want your code to be recognized as, for my case, it's all my balls. 
+5. Now, you can retrain your dataset by first going into the docker and changing directories into jetson-inference/python/training/classification.
+6. Then, to actually retrain it, you will need to run this code that will take while: python3 train.py--model-dir=models/sports-ball data/sports-ball.
+7. After this, you need to export the network using: python3 onnx_export.py --model-dir=models/colors in the same jetson-inference/ python/training/classification in the docker. When this completes, there should be a new resnet18.onnx file - this is your retrained model. You can find this in  jetson-inference/python/training/classification/models/sports-ball.
+8. Now, you will need to assign the variables for NET and DATASET. NET= models/sports-ball. DATASET = data/sports-ball
+9. Finally, now all you need to do is run the code. To run the code: imagenet.py --model=python/training/classification/$NET/ resnet18.onnx --input_blob=input_0 --output_blob=output_0 --labels=python/training/classification/$DATASET/labels.txt $DATASET/ training_dataset/basketball/05_BB.png output_sports-ball/. The reason I put sudo before this code, because I ran into an error saying I didn't have permission and sudo overrides the restrictions. Only put the "sudo" if you run into the same error. The "--model=python/training/classification/$NET/resnet18.onnx" is to call the new retrained dataset. All the code in front is a path to lead to it. The "--labels=python/training/classification/$DATASET/labels.txt" is for calling the labels.txt doc we made just so the code knows what to call the image you just inputted. $DATASET/ training_dataset/basketball/05_BB.png is to find what image you want. The basketball is for which ball you want and the 05_BB.png is for what image you want in basketball. This all is in your dataset. The "output_colors/" part is telling the code where to ouput the result to.
+10. Lastly to see the results, you can scp the result to your desktop by running this command for Mac: scp @192.168. 55.1:/home//jetson-inference/output_sports-ball/0.jpg ./ (My output_sports-ball folder is in jetson-inference, it might be different for you, check to make sure the path to your output_sports-ball folder is correct.)
+And your done! Whoohoo!
 
-# nvidia-project
-temporary change
+Link to youtube video: 
