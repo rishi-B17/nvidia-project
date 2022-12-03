@@ -12,4 +12,4 @@ I created my project on the Jetson nano, using a retrained resnet18 model, conta
 10. Lastly to see the results, you can scp the result to your desktop by running this command for Mac: scp @192.168. 55.1:/home//jetson-inference/output_sports-ball/0.jpg ./ (My output_sports-ball folder is in jetson-inference, it might be different for you, check to make sure the path to your output_sports-ball folder is correct.)
 And your done! Whoohoo!
 
-Link to youtube video: 
+Link to youtube video: https://www.youtube.com/watch?v=YkK4km2W0rQ
